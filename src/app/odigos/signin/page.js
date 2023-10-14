@@ -1,19 +1,25 @@
 "use client"
+import dynamic from 'next/dynamic';
 import useResponsive from '@/hook/useResponsive'
 
-import SigninPage from '@/pages/Signin/SigninPage'
-import SigninPageMobile from '@/pages/Signin/SigninPageMobile'
+const SigninPageMobile = dynamic(() => import('@/pages/Signin/SigninPageMobile'), {
+  ssr: false, // Render this component only on the client side
+});
+
+
 import { useEffect, useState } from 'react'
 
 
 export default function Page() {
   
   const {isMobile} = useResponsive();
+  const [mobile, setmobile] = useState(true);
   useEffect(() => {
-  }, [])
+    setmobile(isMobile);
+  }, [isMobile])
   
   return (
-    <>  {isMobile ? <SigninPageMobile/>:<SigninPage/> }</>
+    <>  {mobile ? <SigninPageMobile/>:<><h1>Please open in mobile browser</h1></> }</>
   )
 }
 

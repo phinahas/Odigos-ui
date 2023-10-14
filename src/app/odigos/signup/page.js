@@ -1,10 +1,24 @@
-import Image from 'next/image'
+"use client"
+import dynamic from 'next/dynamic';
+import useResponsive from '@/hook/useResponsive';
+
+const SignupPageMobile = dynamic(() => import('@/pages/Signup/SignupPageMobile'), {
+  ssr: false, // Render this component only on the client side
+});
+
+import { useEffect, useState } from 'react'
 
 
-export default function Home() {
+export default function Page() {
+  
+  const {isMobile} = useResponsive();
+  const [mobile, setmobile] = useState(true);
+  useEffect(() => {
+    setmobile(isMobile);
+  }, [isMobile])
+  
   return (
-    <>
-      <h1>Hello Odigos!!</h1>
-    </>
+    <>  {mobile ? <SignupPageMobile/>:<><h1>Please open in mobile browser</h1></> }</>
   )
 }
+

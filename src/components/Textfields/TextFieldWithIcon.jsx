@@ -3,25 +3,25 @@ import * as React from "react";
 import IconButton from "@mui/material/IconButton";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
-import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 
-function TextFieldWithIcon() {
+
+function TextFieldWithIcon({placeholder="placeholder",onChangeFn,icon,type}) {
  
 
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
   return (
     <>
       
       <OutlinedInput
         id="outlined-adornment"
-        type={"text"}
-        placeholder="abc@xyz.com"
+        type={type}
+        placeholder={placeholder}
         endAdornment={
           <InputAdornment position="end">
             <IconButton
               edge="end"
             >
-              <AlternateEmailIcon /> 
+            {icon}
             </IconButton>
           </InputAdornment>
         }
