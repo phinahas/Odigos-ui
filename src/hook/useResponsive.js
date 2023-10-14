@@ -1,11 +1,11 @@
-
+"use client"
 import { useMediaQuery } from 'react-responsive';
 import { breakpoints } from './breakpoints';
 
 export default function useResponsive(){
   const isDesktop = useMediaQuery({ minWidth: breakpoints.sm+1 });
   const isMobile = useMediaQuery({ maxWidth: breakpoints.sm });
-
+ 
   return {
     isDesktop,
     isMobile,
