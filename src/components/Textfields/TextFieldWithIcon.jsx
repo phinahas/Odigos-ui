@@ -25,7 +25,7 @@ function TextFieldWithIcon({placeholder="placeholder",onChangeFn,icon,type}) {
             </IconButton>
           </InputAdornment>
         }
-     
+        onChange={(e)=>onChangeFn(e.target.value)}
       />
     </>
   );

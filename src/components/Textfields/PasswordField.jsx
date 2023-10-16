@@ -8,7 +8,7 @@ import FormControl from "@mui/material/FormControl";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
-function PasswordField() {
+function PasswordField({onChangeFn}) {
   const [showPassword, setShowPassword] = React.useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -31,7 +31,7 @@ function PasswordField() {
             </IconButton>
           </InputAdornment>
         }
-     
+        onChange={(e)=>{onChangeFn(e.target.value)}}
       />
     </>
   );
