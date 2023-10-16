@@ -39,7 +39,6 @@ function SigninupPageMobile() {
 };
 
 const signupFn = ()=>{
-  console.log(name, email, password);
 
   if(!name || !password || !email){
     setSnackbarMessage("All fields are required");
