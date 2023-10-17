@@ -26,9 +26,9 @@ import { nav } from '@/mocks/nav'
 
 
 export default function FixedBottomNavigation({children}) {
-    const navigate = useRouter();
+    const router = useRouter();
 
-    const [value, setValue] = React.useState(0);
+    const [value, setValue] = React.useState(null);
     const ref = React.useRef(null);
 
 
@@ -53,7 +53,7 @@ export default function FixedBottomNavigation({children}) {
                    
                     {nav.map((item) => (
 
-                        <BottomNavigationAction label={item.title} icon={item.icon} onClick={() => { navigate(item.path)}} />
+                        <BottomNavigationAction label={item.title} icon={item.icon} onClick={() => { router.push(item.path)}} />
                     ))}
 
                 </BottomNavigation>

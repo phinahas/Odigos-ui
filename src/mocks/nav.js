@@ -1,5 +1,5 @@
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import StorefrontIcon from '@mui/icons-material/Storefront';
+import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 
 export const nav = [
     {
@@ -9,7 +9,7 @@ export const nav = [
     },
     {
         title:"Profile",
-        icon:<StorefrontIcon/>,
+        icon:<PersonOutlineOutlinedIcon/>,
         path:'/odigos/dashboard/profile'
     },
     

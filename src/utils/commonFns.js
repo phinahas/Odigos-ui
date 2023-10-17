@@ -10,6 +10,17 @@ export const  getUserTimeZone = ()=>{
       return 'UTC';
     }
   }
+
+  export const getToken = ()=>{
+
+    let tokenFromLS;
+  if(typeof window !== 'undefined'){
+
+     tokenFromLS = localStorage.getItem('tokenOs');
+     return tokenFromLS;
+  }
+
+  }
   
 
   

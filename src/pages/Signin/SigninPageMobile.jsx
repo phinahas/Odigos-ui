@@ -1,5 +1,6 @@
 "use client"
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/navigation';
 
 //MUI
@@ -17,9 +18,12 @@ import Snackbar from '@/components/Snackbar/Snackbar';
 //helpers
 import {getUserTimeZone} from '@/utils/commonFns';
 import axios from '@/axios';
+import { addUser, setLoginState } from '@/Redux/UserSlice'
+
 
 function SigninPageMobile() {
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false);
   const [snackbarState, setSnackbarState] = useState(false);
@@ -43,8 +47,10 @@ function SigninPageMobile() {
     axios.post('/user/auth/signin',{email:email,password:password,timezone:getUserTimeZone()})
     .then((response) => {
       if(typeof window !== 'undefined'){
-        localStorage.setItem('tokenBS', response.data.token);
+        localStorage.setItem('tokenOs', response.data.token);
       }
+      dispatch(addUser(response.data.user));
+      dispatch(setLoginState(true));
       setSnackbarMessage(response.data.message || "Login success");
       setSnackbarServity("success");
       setSnackbarState(true);
