@@ -9,10 +9,10 @@ export default function ComboBox({optionValues=[],onChangeFn,displayKey='id',lab
       id="combo-box-demo"
       options={optionValues}
       getOptionLabel={(option) => option[displayKey]}
-      onChange={(event,value)=>{}}
+      onChange={(event,value)=>{onChangeFn(value)}}
       sx={{ width: '100%' }}
       fullWidth
-      renderInput={(params) => <TextField {...params} label="Movie" />}
+      renderInput={(params) => <TextField {...params} label={label} />}
     />
   );
 }

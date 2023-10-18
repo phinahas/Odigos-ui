@@ -4,27 +4,72 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { Grid, Stack, Typography } from "@mui/material";
+import { Grid,  Typography } from "@mui/material";
 
 // components
 import Autocomplete from "@/components/Textfields/Autocomplete";
-import SimpleButton from '@/components/Buttons/SimpleButton'
+import SimpleButton from '@/components/Buttons/SimpleButton';
+import SimpleTextField from '@/components/Textfields/TextField';
+import FormDialog from '@/components/Dialog/FormDialog';
 
 export default function MaxWidthDialog({
   openState = false,
   changeOpenState,
-  dataForComponent,
+  categories,
+  labels,
+  addEntryActn,
+  addNewCategory
 }) {
-  console.log(dataForComponent);
-  const [fullWidth, setFullWidth] = React.useState(true);
-  const [maxWidth, setMaxWidth] = React.useState("lg");
+
+
+  const[createdCategoryName,setCreatedCategoryName] = React.useState(null);
+  const [selectedCategory,setSelectedCategory] = React.useState(null);
+  const [title,setTitle] = React.useState(null);
+  const [selectedLabel,setSelectedLabel] = React.useState(null);
+  const [description,setDescription] = React.useState(null);
+  const [amount,setAmount] = React.useState(null);
+  const [date,setDate] = React.useState(null);
+
+  const [formDialogState,setFormState] = React.useState(false);
+
+  const closeFormDialog = ()=>{
+    setFormState(false);
+  }
+
+  const addExepnseBtn = ()=>{
+    const expenseData = {
+      category:selectedCategory,
+      label:selectedLabel,
+      title:title,
+      remarks:description,
+      date:date,
+      amount:amount,
+    }
+    addEntryActn(expenseData);
+  }
+
+  const createANewCategoryFn = ()=>{
+    addNewCategory({"category":createdCategoryName});
+    setFormState(false);
+  }
 
   return (
     <React.Fragment>
+      <FormDialog
+       openState={formDialogState}
+        closeFn={closeFormDialog}
+         textFieldLabel={'Category'}
+          title="Add New Category"
+           textFieldType={"text"}
+            formSubmtFn={createANewCategoryFn}
+            onChangeTextfield={setCreatedCategoryName}
+            
+
+             />
       <Dialog
         fullScreen
-        fullWidth={fullWidth}
-        maxWidth={maxWidth}
+        fullWidth={true}
+        maxWidth={"lg"}
         open={openState}
         onClose={changeOpenState}
         sx={{ fontFamily: "Poppins !important" }}
@@ -43,12 +88,23 @@ export default function MaxWidthDialog({
         <DialogContent sx={{ background: "" }}>
           <Grid container>
             <Grid item xs={6} sm={6}>
-              <Autocomplete />
+              <Autocomplete optionValues={categories} displayKey="name" label="Categories" onChangeFn={setSelectedCategory} />
             </Grid>
             <Grid item xs={6} sm={6} sx={{display:'flex',justifyContent:'center', alignItems: 'center', paddingLeft:'15px'}}>
-              <SimpleButton buttonName="Add new"   />
+              <SimpleButton buttonName="Add new"    />
             </Grid>
-
+            <Grid item xs={6} sm={6}>
+              <SimpleTextField label="Title" onChangeFn={setTitle} />
+            </Grid>
+            <Grid item xs={6} sm={6}>
+              <Autocomplete optionValues={labels} displayKey="name" label="Label" onChangeFn={setSelectedLabel} />
+            </Grid>
+            <Grid item xs={6} sm={6}>
+              <SimpleTextField label="Expense" onChangeFn={setAmount}  />
+            </Grid>
+            <Grid item xs={12} sm={12} sx={{display:'flex',justifyContent:'center', alignItems: 'center', paddingLeft:'15px'}}>
+              <SimpleButton buttonName="Save" onClickActn={addExepnseBtn}   />
+            </Grid>
           </Grid>
         </DialogContent>
         <DialogActions>
@@ -59,7 +115,4 @@ export default function MaxWidthDialog({
   );
 }
 
-const calculateOrderTotal = (items) => {
-  const totalAmountSum = items.reduce((acc, item) => acc + item.totalAmount, 0);
-  return totalAmountSum;
-};
+
