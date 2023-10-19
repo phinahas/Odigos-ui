@@ -1,3 +1,5 @@
+import moment from 'moment-timezone';
+
 export const  getUserTimeZone = ()=>{
     // Check if the browser supports the Intl.DateTimeFormat API
     if (typeof Intl === 'object' && typeof Intl.DateTimeFormat === 'function') {
@@ -9,6 +11,13 @@ export const  getUserTimeZone = ()=>{
       // For example, you can use 'UTC' or 'America/New_York' as a fallback
       return 'UTC';
     }
+  }
+
+  export const convertToUserLocalTime = (date,timezone)=>{
+// Convert UTC timestamp to the user's local time
+    const localTime = moment(date).tz(timezone);
+    return localTime.format('LLL');
+  
   }
 
   export const getToken = ()=>{
