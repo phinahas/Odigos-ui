@@ -17,6 +17,7 @@ import axios from '@/axios';
 import { getToken } from '@/utils/commonFns';
 import Loader from '@/components/Loader/Loader';
 import Snackbar from '@/components/Snackbar/Snackbar';
+import { ConstructionOutlined } from '@mui/icons-material';
 
 
 const scrollableGrid = {
@@ -49,6 +50,7 @@ function HomePage() {
         setLoading(false);
         return;
       }
+      console.log(response.data)
       setCategories(response.data.categories);
       setLoading(false);
 
@@ -90,17 +92,38 @@ function HomePage() {
   }
 
   const addNewExpense = (data)=>{
+    //console.log(new Date());
+    const now = new Date();
+    const isoString = now.toISOString();
+    data.date = isoString;
+    if( data.category==null || data.title==null || data.remarks==null || data.date==null || data.label==null || data.amount==null){
+      setSnackbarMessage("All fields are required");
+      setSnackbarServity("error");
+      setSnackbarState(true);
+      return;
+    }
     axios.post('/user/add-expense',data,{headers:{Authorization:getToken()}}).then((response)=>{
-      Console.log(response);
+      setSnackbarMessage(response.data.message || "");
+      setSnackbarServity("success");
+      setSnackbarState(true);
     }).catch((err)=>{
       console.error(err);
+      setSnackbarMessage(err.response.data.message || "something went wrong");
+      setSnackbarServity("error");
+      setSnackbarState(true);
     })
   }
 
   const addNewCategory = (data)=>{
+    console.log(data);
     axios.post('/user/create-category',data,{headers:{Authorization:getToken()}}).then((response)=>{
-
+      console.log(response);
+      setCategories((prevArray) => [...prevArray, response.data.newCategory]);
     }).catch((error)=>{
+
+      setSnackbarMessage(error.response.data.message || error.message || "Something went wrong");
+      setSnackbarServity("error");
+      setSnackbarState(true);
       
     });
   }

@@ -1,10 +1,10 @@
 import React from 'react';
 import TextField from '@mui/material/TextField';
 
-function TextField({variant='outlined', label='outlined', onChangeFn }) {
+function SimpleTextField({variant='outlined', label='outlined', onChangeFn }) {
   return (
-    <TextField id="outlined-basic" label={label} variant={variant}  onChange={(e)=>{onChangeFn(e.target.value)}}  />
+    <TextField id="outlined-basic" label={label} variant={variant}  onChange={(e)=>{onChangeFn(e.target.value)}} fullWidth />
   )
 }
 
-export default TextField
+export default SimpleTextField

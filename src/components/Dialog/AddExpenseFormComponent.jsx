@@ -32,6 +32,10 @@ export default function MaxWidthDialog({
 
   const [formDialogState,setFormState] = React.useState(false);
 
+  const openFormDialog = ()=>{
+    setFormState(true);
+  }
+
   const closeFormDialog = ()=>{
     setFormState(false);
   }
@@ -85,19 +89,22 @@ export default function MaxWidthDialog({
         >
           <Typography>Add Expense</Typography>
         </DialogTitle>
-        <DialogContent sx={{ background: "" }}>
-          <Grid container>
+        <DialogContent sx={{ display:'flex',justifyContent:'center', alignItems:'center' }}>
+          <Grid container spacing={4}>
             <Grid item xs={6} sm={6}>
               <Autocomplete optionValues={categories} displayKey="name" label="Categories" onChangeFn={setSelectedCategory} />
             </Grid>
             <Grid item xs={6} sm={6} sx={{display:'flex',justifyContent:'center', alignItems: 'center', paddingLeft:'15px'}}>
-              <SimpleButton buttonName="Add new"    />
+              <SimpleButton buttonName="Add new" onClickActn={openFormDialog} />
             </Grid>
             <Grid item xs={6} sm={6}>
               <SimpleTextField label="Title" onChangeFn={setTitle} />
             </Grid>
             <Grid item xs={6} sm={6}>
               <Autocomplete optionValues={labels} displayKey="name" label="Label" onChangeFn={setSelectedLabel} />
+            </Grid>
+            <Grid item xs={12} sm={12}>
+              <SimpleTextField label="Remarks" onChangeFn={setDescription} />
             </Grid>
             <Grid item xs={6} sm={6}>
               <SimpleTextField label="Expense" onChangeFn={setAmount}  />

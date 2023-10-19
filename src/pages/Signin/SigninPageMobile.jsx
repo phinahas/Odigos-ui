@@ -57,7 +57,7 @@ function SigninPageMobile() {
       router.push('/odigos/dashboard/home');
     }).catch((error) => {
       console.log(error);
-      setSnackbarMessage(error.response.data.message ||error.message|| "Something went wrong");
+      setSnackbarMessage(error.message || error.response.data.message || "Something went wrong");
       setSnackbarServity("error");
       setSnackbarState(true);
     })

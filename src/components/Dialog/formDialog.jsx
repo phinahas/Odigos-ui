@@ -7,7 +7,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-export default function FormDialog({openState=false,closeFn,title="Dialog Title",dialogContent,textFieldType,textFieldLabel,onChangeTextfield,formSubmtFn}) {
+export default function FormDialog({openState=false,closeFn,title="Dialog Title",btnName="Add",dialogContent,textFieldType,textFieldLabel,onChangeTextfield,formSubmtFn}) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -40,7 +40,7 @@ export default function FormDialog({openState=false,closeFn,title="Dialog Title"
         </DialogContent>
         <DialogActions>
           <Button onClick={closeFn}>Cancel</Button>
-          <Button onClick={formSubmtFn}>Subscribe</Button>
+          <Button onClick={formSubmtFn}>{btnName}</Button>
         </DialogActions>
       </Dialog>
     </div>
