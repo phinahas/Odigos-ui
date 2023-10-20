@@ -10,7 +10,7 @@ import { Grid,  Typography } from "@mui/material";
 import Autocomplete from "../Textfields/Autocomplete";
 import SimpleButton from '../Buttons/SimpleButton';
 import SimpleTextField from '../Textfields/TextField';
-import FormDialog from '../Dialog/FormDialog';
+//import FormDialog from '../Dialog/FormDialog';
 
 export default function MaxWidthDialog({
   openState = false,
@@ -59,7 +59,7 @@ export default function MaxWidthDialog({
 
   return (
     <React.Fragment>
-      <FormDialog
+      {/* <FormDialog
        openState={formDialogState}
         closeFn={closeFormDialog}
          textFieldLabel={'Category'}
@@ -69,7 +69,7 @@ export default function MaxWidthDialog({
             onChangeTextfield={setCreatedCategoryName}
             
 
-             />
+             /> */}
       <Dialog
         fullScreen
         fullWidth={true}
