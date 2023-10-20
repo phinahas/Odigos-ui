@@ -1,6 +1,6 @@
 import React from 'react'
 
-import ProfilePage from '@/pages/Profile/ProfilePage'
+import ProfilePage from '@/screen/Profile/ProfilePage'
 
 const page = () => {
   return (
