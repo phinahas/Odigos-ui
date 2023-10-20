@@ -7,10 +7,10 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { Grid,  Typography } from "@mui/material";
 
 // components
-import Autocomplete from "@/components/Textfields/Autocomplete";
-import SimpleButton from '@/components/Buttons/SimpleButton';
-import SimpleTextField from '@/components/Textfields/TextField';
-import FormDialog from '@/components/Dialog/FormDialog';
+import Autocomplete from "../Textfields/Autocomplete";
+import SimpleButton from '../Buttons/SimpleButton';
+import SimpleTextField from '../Textfields/TextField';
+import FormDialog from '../Dialog/FormDialog';
 
 export default function MaxWidthDialog({
   openState = false,

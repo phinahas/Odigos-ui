@@ -9,16 +9,16 @@ import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 
 
 //components
-import PasswordField from '@/components/Textfields/PasswordField';
-import TextFieldWithIcon from '@/components/Textfields/TextFieldWithIcon';
-import SimpleButton from '@/components/Buttons/SimpleButton';
-import Loader from '@/components/Loader/Loader';
-import Snackbar from '@/components/Snackbar/Snackbar';
+import PasswordField from '../../components/Textfields/PasswordField';
+import TextFieldWithIcon from '../../components/Textfields/TextFieldWithIcon';
+import SimpleButton from '../../components/Buttons/SimpleButton';
+import Loader from '../../components/Loader/Loader';
+import Snackbar from '../../components/Snackbar/Snackbar';
 
 //helpers
-import {getUserTimeZone} from '@/utils/commonFns';
-import axios from '@/axios';
-import { addUser, setLoginState } from '@/Redux/UserSlice'
+import {getUserTimeZone} from '../../utils/commonFns';
+import axios from '../../axios';
+import { addUser, setLoginState } from '../../Redux/UserSlice'
 
 
 function SigninPageMobile() {

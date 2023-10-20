@@ -5,11 +5,11 @@ import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/navigation';
 
 //components
-import Loader from '@/components/Loader/Loader';
+import Loader from '../components/Loader/Loader';
 
 //helpers
-import {getToken,getUserTimeZone} from '@/utils/commonFns';
-import { addUser, setLoginState } from '@/Redux/UserSlice';
+import {getToken,getUserTimeZone} from '../utils/commonFns';
+import { addUser, setLoginState } from '../Redux/UserSlice';
 import axios from '@/axios';
 
 export default function Home() {

@@ -7,16 +7,16 @@ import { Grid, Stack } from '@mui/material';
 import EqualizerIcon from '@mui/icons-material/Equalizer';
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 //components
-import ExpenseDisplayComponent from '@/components/ExpenseDisplayComponent/ExpenseDisplayComponent';
-import EntryDisplayCard from '@/components/Cards/EntryDisplayCard';
-import FloatingButton from '@/components/Buttons/FloatingButton';
-import AddExpenseFormComponent from '@/components/Dialog/AddExpenseFormComponent';
+import ExpenseDisplayComponent from '../../components/ExpenseDisplayComponent/ExpenseDisplayComponent';
+import EntryDisplayCard from '../../components/Cards/EntryDisplayCard';
+import FloatingButton from '../../components/Buttons/FloatingButton';
+import AddExpenseFormComponent from '../../components/Dialog/AddExpenseFormComponent';
 
 //helpers
-import axios from '@/axios';
-import { getToken, convertToUserLocalTime } from '@/utils/commonFns';
-import Loader from '@/components/Loader/Loader';
-import Snackbar from '@/components/Snackbar/Snackbar';
+import axios from '../../axios';
+import { getToken, convertToUserLocalTime } from '../../utils/commonFns';
+import Loader from '../../components/Loader/Loader';
+import Snackbar from '../../components/Snackbar/Snackbar';
 
 
 
