@@ -9,7 +9,7 @@ import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
 
-import axios from '@/axios';
+import axios from '../../axios';
 
 
 

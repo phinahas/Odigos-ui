@@ -1,5 +1,5 @@
 import { Inter } from "next/font/google";
-import Prvider from "@/Redux/Prvider";
+import Prvider from "../Redux/Prvider";
 
 const inter = Inter({ subsets: ["latin"] });
 

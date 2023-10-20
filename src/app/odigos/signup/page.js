@@ -1,6 +1,6 @@
 "use client"
 import dynamic from 'next/dynamic';
-import useResponsive from '@/hook/useResponsive';
+import useResponsive from '../../../hook/useResponsive';
 
 const SignupPageMobile = dynamic(() => import('../../../screen/Signup/SignupPageMobile'), {
   ssr: false, // Render this component only on the client side
