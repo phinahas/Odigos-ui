@@ -17,7 +17,7 @@ import List from '@mui/material/List';
 
 
 // mock
-import { nav } from '@/mocks/nav'
+import { nav } from '../../mocks/nav'
 
 
 
