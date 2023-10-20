@@ -53,14 +53,18 @@ const signupFn = ()=>{
     return;
   }
 
+  setLoading(true);
   axios.post('/user/auth/signup',{name:name,email:email,password:password,timezone:getUserTimeZone()})
   .then((response) => {
+    setLoading(false);
     setSnackbarMessage(response.data.message);
     setSnackbarServity("success");
     setSnackbarState(true);
   }).catch((error) => {
+    setLoading(false);
     console.log(error);
-    setSnackbarMessage(error.response.data.message ||error.message|| "Something went wrong");
+    const errorMessage =error.response?.data?.message || error.message || "Something went wrong";
+    setSnackbarMessage(errorMessage);
     setSnackbarServity("error");
     setSnackbarState(true);
   })

@@ -44,6 +44,7 @@ function SigninPageMobile() {
     }
    
   
+    setLoading(true);
     axios.post('/user/auth/signin',{email:email,password:password,timezone:getUserTimeZone()})
     .then((response) => {
       if(typeof window !== 'undefined'){
@@ -51,13 +52,16 @@ function SigninPageMobile() {
       }
       dispatch(addUser(response.data.user));
       dispatch(setLoginState(true));
+      setLoading(false);
       setSnackbarMessage(response.data.message || "Login success");
       setSnackbarServity("success");
       setSnackbarState(true);
       router.push('/odigos/dashboard/home');
     }).catch((error) => {
       console.log(error);
-      setSnackbarMessage(error.message || error.response.data.message || "Something went wrong");
+      setLoading(false);
+      const errorMessage =error.response?.data?.message || error.message || "Something went wrong";
+      setSnackbarMessage(errorMessage);
       setSnackbarServity("error");
       setSnackbarState(true);
     })
