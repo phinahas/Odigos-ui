@@ -37,6 +37,7 @@ export default function Home() {
         console.log(error.response);
         setIsLoading(false)
         router.push('/odigos/signin');
+        return;
       }
     }
 
@@ -44,12 +45,13 @@ export default function Home() {
       fetchData();
     } else {
       router.push('/odigos/signin');
+      return;
     }
   }, [dispatch, router, tokenFromLS]);
 
   return (
 <>
-{isLoading ? <Loader openState={isLoading}/>:null}
+{isLoading ? <Loader openState={isLoading}/>:<Loader openState={isLoading}/>}
 </>
       
   );

@@ -60,10 +60,12 @@ function HomePage() {
 
     }).catch((error) => {
       console.log(error);
+      setLoading(false);
       setSnackbarMessage(error.response.data.message || error.message || "Something went wrong");
       setSnackbarServity("error");
       setSnackbarState(true);
     })
+    setLoading(true);
     axios.get('/user/get-categories', { headers: { Authorization: getToken() } }).then((response) => {
       if (response.status != 200) {
         setCategories([]);
@@ -76,11 +78,12 @@ function HomePage() {
 
     }).catch((error) => {
       console.log(error);
+      setLoading(false);
       setSnackbarMessage(error.response.data.message || error.message || "Something went wrong");
       setSnackbarServity("error");
       setSnackbarState(true);
     })
-
+    setLoading(true);
     axios.get('/user/get-labels', { headers: { Authorization: getToken() } }).then((response) => {
       if (response.status != 200) {
         setLabels([]);
@@ -92,12 +95,11 @@ function HomePage() {
 
     }).catch((error) => {
       console.log(error);
+      setLoading(false);
       setSnackbarMessage(error.response.data.message || error.message || "Something went wrong");
       setSnackbarServity("error");
       setSnackbarState(true);
     })
-
-
   }, [])
 
 
@@ -122,29 +124,36 @@ function HomePage() {
       setSnackbarState(true);
       return;
     }
+    setLoading(true);
     axios.post('/user/add-expense', data, { headers: { Authorization: getToken() } }).then((response) => {
       setExpenseArry((prevArray) => [...prevArray, response.data.newExpense]);
       setTotalAmount(totalAmount+response.data.newExpense.amount);
       setSnackbarMessage(response.data.message || "");
       setSnackbarServity("success");
+      setLoading(false);
       setSnackbarState(true);
     }).catch((err) => {
       console.error(err);
       setSnackbarMessage(err.response.data.message || "something went wrong");
       setSnackbarServity("error");
+      setLoading(false);
       setSnackbarState(true);
     })
   }
 
   const addNewCategory = (data) => {
    
+    setLoading(true);
     axios.post('/user/create-category', data, { headers: { Authorization: getToken() } }).then((response) => {
-     
       setCategories((prevArray) => [...prevArray, response.data.newCategory]);
+      setSnackbarMessage("New category added");
+      setSnackbarServity("success");
+      setLoading(false);
+      setSnackbarState(true);
     }).catch((error) => {
-
       setSnackbarMessage(error.response.data.message || error.message || "Something went wrong");
       setSnackbarServity("error");
+      setLoading(false);
       setSnackbarState(true);
 
     });
@@ -157,7 +166,7 @@ function HomePage() {
 
       <Grid container>
         <FloatingButton buttonText={"Add"} clickAction={changeFormState} />
-        <AddExpenseFormComponent openState={formState} changeOpenState={closeForm} categories={categories} labels={labels} addEntryActn={addNewExpense} addNewCategory={addNewCategory} />
+        <AddExpenseFormComponent openState={formState} changeOpenState={closeForm} categories={categories} labels={labels} addEntryActn={addNewExpense} addNewCategory={addNewCategory}  />
         <Grid item xs={12} sm={12} sx={{ background: '' }}>
           <ExpenseDisplayComponent totalAmount={totalAmount} />
         </Grid>
@@ -167,10 +176,12 @@ function HomePage() {
         </Grid>
         <Grid item xs={12} sm={12} sx={{ background: '', marginTop: '2px !important' }}>
           <div style={scrollableGrid}>
-            {expenseArry.map((expense) => {
-
+            {expenseArry.length >0 ? <>
+              {expenseArry.map((expense) => {
               return <EntryDisplayCard date={convertToUserLocalTime(expense.date,expense.timezone)}  title={expense.title} amount={expense.amount} category={expense.category} />
             })}
+            </>:null}
+           
 
           </div>
 
