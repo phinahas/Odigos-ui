@@ -32,4 +32,11 @@ export const  getUserTimeZone = ()=>{
   }
   
 
+  export const doDateValidation = (date1,date2)=>{
+    if (date1 < date2) {
+      return true
+    } else {
+      return false
+    }
+  }
   
