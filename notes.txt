@@ -18,3 +18,7 @@
              <span style={{ marginRight: "10%" }}>
                     <NavigateNextIcon sx={{ fontSize: "30px" }} />
                   </span>
+
+                  ///////////////////////////////////////////////////////////////////////////
+
+                  https://episyche.com/blog/how-to-create-charts-using-chart-js-in-next-js : chart js

@@ -128,6 +128,7 @@ function HomePage() {
     axios.post('/user/add-expense', data, { headers: { Authorization: getToken() } }).then((response) => {
       setExpenseArry((prevArray) => [...prevArray, response.data.newExpense]);
       setTotalAmount(totalAmount+response.data.newExpense.amount);
+      setFormState(false);
       setSnackbarMessage(response.data.message || "");
       setSnackbarServity("success");
       setLoading(false);
@@ -167,7 +168,7 @@ function HomePage() {
       <Grid container>
         <FloatingButton buttonText={"Add"} clickAction={changeFormState} />
         <AddExpenseFormComponent openState={formState} changeOpenState={closeForm} categories={categories} labels={labels} addEntryActn={addNewExpense} addNewCategory={addNewCategory}  />
-        <Grid item xs={12} sm={12} sx={{ background: '' }}>
+        <Grid item xs={12} sm={12} margin={"3px"}>
           <ExpenseDisplayComponent totalAmount={totalAmount} />
         </Grid>
         <Grid item xs={12} sm={12} sx={{ background: '', marginTop: '2px !important', display: 'flex', justifyContent: 'space-evenly' }}>
