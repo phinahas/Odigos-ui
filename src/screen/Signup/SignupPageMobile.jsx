@@ -60,6 +60,7 @@ const signupFn = ()=>{
     setSnackbarMessage(response.data.message);
     setSnackbarServity("success");
     setSnackbarState(true);
+    router.push('/odigos/signin');
   }).catch((error) => {
     setLoading(false);
     console.log(error);

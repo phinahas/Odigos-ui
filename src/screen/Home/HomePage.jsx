@@ -36,6 +36,7 @@ function HomePage() {
   const [labels, setLabels] = useState([]);
   const [expenseArry, setExpenseArry] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
+  const [thisMonthTotal,setThisMonthTotal] = useState(0);
 
   const [formState, setFormState] = useState(false);
 
@@ -50,12 +51,14 @@ function HomePage() {
       if (response.status != 200) {
         setExpenseArry([]);
         setTotalAmount(0);
+        //setThisMonthTotal(0);
         setLoading(false);
         return;
       }
       
       setExpenseArry(response.data.expenses);
       setTotalAmount(response.data.totalAmount);
+      setThisMonthTotal(response.data.thisMonthExpense);
       setLoading(false);
 
     }).catch((error) => {
@@ -128,6 +131,8 @@ function HomePage() {
     axios.post('/user/add-expense', data, { headers: { Authorization: getToken() } }).then((response) => {
       setExpenseArry((prevArray) => [...prevArray, response.data.newExpense]);
       setTotalAmount(totalAmount+response.data.newExpense.amount);
+      setThisMonthTotal(thisMonthTotal+response.data.newExpense.amount);
+      setFormState(false);
       setSnackbarMessage(response.data.message || "");
       setSnackbarServity("success");
       setLoading(false);
@@ -167,8 +172,8 @@ function HomePage() {
       <Grid container>
         <FloatingButton buttonText={"Add"} clickAction={changeFormState} />
         <AddExpenseFormComponent openState={formState} changeOpenState={closeForm} categories={categories} labels={labels} addEntryActn={addNewExpense} addNewCategory={addNewCategory}  />
-        <Grid item xs={12} sm={12} sx={{ background: '' }}>
-          <ExpenseDisplayComponent totalAmount={totalAmount} />
+        <Grid item xs={12} sm={12} margin={"3px"}>
+          <ExpenseDisplayComponent totalAmount={totalAmount} thisMonthTotal={thisMonthTotal} monthTotaal />
         </Grid>
         <Grid item xs={12} sm={12} sx={{ background: '', marginTop: '2px !important', display: 'flex', justifyContent: 'space-evenly' }}>
           <CurrencyRupeeIcon />

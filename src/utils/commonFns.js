@@ -13,6 +13,14 @@ export const  getUserTimeZone = ()=>{
     }
   }
 
+  export const getUserMonth = ()=>{
+    const now = new Date();
+  const options = { month: 'long' };
+  const userMonth = now.toLocaleDateString(undefined, options);
+
+  return userMonth;
+  }
+
   export const convertToUserLocalTime = (date,timezone)=>{
 // Convert UTC timestamp to the user's local time
     const localTime = moment(date).tz(timezone);
