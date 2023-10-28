@@ -173,7 +173,7 @@ function HomePage() {
         <FloatingButton buttonText={"Add"} clickAction={changeFormState} />
         <AddExpenseFormComponent openState={formState} changeOpenState={closeForm} categories={categories} labels={labels} addEntryActn={addNewExpense} addNewCategory={addNewCategory}  />
         <Grid item xs={12} sm={12} margin={"3px"}>
-          <ExpenseDisplayComponent totalAmount={totalAmount} thisMonthTotal={thisMonthTotal} />
+          <ExpenseDisplayComponent totalAmount={totalAmount} thisMonthTotal={thisMonthTotal} monthTotaal />
         </Grid>
         <Grid item xs={12} sm={12} sx={{ background: '', marginTop: '2px !important', display: 'flex', justifyContent: 'space-evenly' }}>
           <CurrencyRupeeIcon />

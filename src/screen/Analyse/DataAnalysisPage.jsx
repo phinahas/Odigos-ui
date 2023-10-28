@@ -10,6 +10,7 @@ import SimpleButton from "../../components/Buttons/SimpleButton";
 import AnalysisEntryDisplayCard from "../../components/Cards/AnalysisEntryDisplayCard";
 import Loader from "../../components/Loader/Loader";
 import Snackbar from "../../components/Snackbar/Snackbar";
+import ExpenseDisplayComponent from "../../components/ExpenseDisplayComponent/ExpenseDisplayComponent";
 
 //helpers
 import { doDateValidation, getToken } from "../../utils/commonFns";
@@ -24,6 +25,7 @@ function DataAnalysisPage() {
   const [startDate, setstartDate] = useState(null);
   const [endDate, setendDate] = useState(null);
   const [entries, setEntries] = useState([]);
+  const [totalAmount, setTotalAmount] = useState(0);
 
   const changeSnackbarState = () => {
     setSnackbarState(false);
@@ -59,6 +61,11 @@ function DataAnalysisPage() {
           return;
         }
         setEntries(response.data.expenses);
+        const calculatedTotalAmount = response.data.expenses.reduce(
+          (total, entry) => total + entry.totalAmount,
+          0
+        );
+        setTotalAmount(calculatedTotalAmount);
         setLoading(false);
       })
       .catch((error) => {
@@ -93,6 +100,21 @@ function DataAnalysisPage() {
           item
           xs={12}
           padding={1}
+          justifyContent={"center"}
+          display={"flex"}
+        >
+          {entries.length > 0 ? (
+            <span>
+              {" "}
+              <span>Total:&nbsp;</span>
+              {totalAmount}
+            </span>
+          ) : null}
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          padding={1}
           marginTop={"10px"}
           justifyContent="center"
           sx={{ overflowY: "auto", maxHeight: "calc(100vh - 200px)" }}
@@ -100,7 +122,13 @@ function DataAnalysisPage() {
           {entries.length > 0 ? (
             <>
               {entries.map((entry) => {
-                return <AnalysisEntryDisplayCard typeOfAnalysis={"date"} date={entry.day} amount={entry.totalAmount} />;
+                return (
+                  <AnalysisEntryDisplayCard
+                    typeOfAnalysis={"date"}
+                    date={entry.day}
+                    amount={entry.totalAmount}
+                  />
+                );
               })}
             </>
           ) : null}
