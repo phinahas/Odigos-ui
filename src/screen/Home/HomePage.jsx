@@ -56,7 +56,7 @@ function HomePage() {
         setLoading(false);
         return;
       }
-      console.log(response.data)
+     
       setExpenseArry(response.data.expenses);
       setTotalAmount(response.data.totalAmount);
       setThisMonthTotal(response.data.thisMonthExpense);

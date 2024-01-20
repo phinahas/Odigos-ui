@@ -32,7 +32,7 @@ function DataAnalysisPage() {
   };
 
   const getData = () => {
-    console.log(startDate, endDate);
+    
     if (!doDateValidation(startDate, endDate)) {
       setSnackbarMessage("Check the selected days");
       setSnackbarServity("warning");

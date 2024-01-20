@@ -11,6 +11,7 @@ import SimpleButton from "../../components/Buttons/SimpleButton";
 import Loader from "../../components/Loader/Loader";
 import Snackbar from "../../components/Snackbar/Snackbar";
 import EntryDisplayCard from "../../components/Cards/EntryDisplayCard";
+import ViewExpenseInDetailComponent from '../../components/Dialog/ViewExpenseInDetailComponent';
 
 //helpers
 import { doDateValidation, getToken, convertToUserLocalTime } from "../../utils/commonFns";
@@ -25,7 +26,9 @@ function KeywordAnalysePage() {
 
   const [searchKeyWord, setSearchKeyWord] = useState(null);
   const [expenses,setExpenses] = useState([]);
-  const [totalAmount, setTotalAmount] = useState(0)
+  const [totalAmount, setTotalAmount] = useState(0);
+  const [viewMoreComponentStatus, setViewMoreComponentStatus] = useState(false);
+  const [expenseToViewMore,setExpenseToViewMore] = useState(null);
 
   const changeSnackbarState = () => {
     setSnackbarState(false);
@@ -51,6 +54,7 @@ function KeywordAnalysePage() {
 
           return;
         }
+       
         setExpenses(response.data.expenses);
         const calculatedTotalAmount = response.data.expenses.reduce(
           (total, entry) => total + entry.amount,
@@ -66,6 +70,31 @@ function KeywordAnalysePage() {
         setSnackbarState(true);
       });
   };
+
+  const closeViewMoreComponents = () => {
+    setViewMoreComponentStatus(false);
+  }
+
+  const viewMoreActnFunction = (id)=>{
+  
+    const entry = expenses.find(exp=> exp._id == id);
+    let objData = {
+        title:entry.title,
+        category:entry.category.name,
+        label:entry.label.name,
+        date:convertToUserLocalTime(entry.date,user.timezone),
+        amount:entry.amount,
+        remarks:entry.remarks
+    };
+    
+    setExpenseToViewMore(objData);
+    setViewMoreComponentStatus(true)
+
+
+
+
+  }
+
   return (
     <>
       <Loader openState={loading} />
@@ -75,6 +104,7 @@ function KeywordAnalysePage() {
         severity={snackbarServity}
         onCloseFunction={changeSnackbarState}
       />
+      <ViewExpenseInDetailComponent openState={viewMoreComponentStatus} changeOpenState={closeViewMoreComponents} expense={expenseToViewMore} />
 
       <Grid container>
         <Grid item xs={12} padding={1}>
@@ -114,10 +144,14 @@ function KeywordAnalysePage() {
               {expenses.map((entry) => {
                 return (
                   <EntryDisplayCard
+                    entryId={entry['_id']}
                     category={entry.category.name}
                     title={entry.title}
                     date={convertToUserLocalTime(entry.date,user.timezone)}
                     amount={entry.amount}
+                    viewMoreOption
+                    viewMoreClick={viewMoreActnFunction}
+
                   />
                 );
               })}

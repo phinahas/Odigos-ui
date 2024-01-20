@@ -27,7 +27,7 @@ export default function FreeSoloCreateOptionDialog() {
   React.useEffect(() => {
 
     axios.get('/user/get-categories',{}).then((response)=>{
-        console.log(response.data);
+      
         setCategories(response.data.categories);
     }).catch((error)=>{
         console.log(error);
