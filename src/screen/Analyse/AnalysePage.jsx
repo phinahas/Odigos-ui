@@ -56,6 +56,27 @@ function AnalysePage() {
           Category
         </Typography>
       </Link>
+      <Link
+        href="/odigos/dashboard/analyse/keyword"
+        style={{ textDecoration: "none" }}
+      >
+        <Typography
+          variant="h6"
+          sx={{
+            color: "#F6F5F5",
+            background: "#276678",
+            padding: "10px !important",
+            borderRadius: "12px",
+            width: "105px",
+            justifyContent: "center",
+            alignItems: "center",
+            display: "flex",
+            marginTop: "8px",
+          }}
+        >
+          Keywords
+        </Typography>
+      </Link>
     </Grid>
   );
 }

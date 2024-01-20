@@ -1,51 +1,45 @@
 "use client";
 import React, { useState } from "react";
-
+import {useSelector } from 'react-redux';
 //mui
-import { Grid, Stack, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 
 //components
-import BasicDatePicker from "../../components/DatePicker/BasicDatePicker";
+
+import TextField from "../../components/Textfields/TextField";
 import SimpleButton from "../../components/Buttons/SimpleButton";
-import AnalysisEntryDisplayCard from "../../components/Cards/AnalysisEntryDisplayCard";
 import Loader from "../../components/Loader/Loader";
 import Snackbar from "../../components/Snackbar/Snackbar";
-import ExpenseDisplayComponent from "../../components/ExpenseDisplayComponent/ExpenseDisplayComponent";
+import EntryDisplayCard from "../../components/Cards/EntryDisplayCard";
+import ViewExpenseInDetailComponent from '../../components/Dialog/ViewExpenseInDetailComponent';
 
 //helpers
-import { doDateValidation, getToken } from "../../utils/commonFns";
+import { doDateValidation, getToken, convertToUserLocalTime } from "../../utils/commonFns";
 import axios from "../../axios";
 
-function DataAnalysisPage() {
+function KeywordAnalysePage() {
+    let {user} = useSelector((state)=>state.user);
   const [loading, setLoading] = useState(false);
   const [snackbarState, setSnackbarState] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("Testing alerts");
   const [snackbarServity, setSnackbarServity] = useState("info");
 
-  const [startDate, setstartDate] = useState(null);
-  const [endDate, setendDate] = useState(null);
-  const [entries, setEntries] = useState([]);
+  const [searchKeyWord, setSearchKeyWord] = useState(null);
+  const [expenses,setExpenses] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
+  const [viewMoreComponentStatus, setViewMoreComponentStatus] = useState(false);
+  const [expenseToViewMore,setExpenseToViewMore] = useState(null);
 
   const changeSnackbarState = () => {
     setSnackbarState(false);
   };
 
   const getData = () => {
-    
-    if (!doDateValidation(startDate, endDate)) {
-      setSnackbarMessage("Check the selected days");
-      setSnackbarServity("warning");
-      setSnackbarState(true);
-      return;
-    }
     //window.alert("All correct")
     setLoading(true);
     axios
       .get(
-        `/user/analyse-the-expense?startDate=${
-          startDate + "T00:00:00.000Z"
-        }&endDate=${endDate + "T00:00:00.000Z"}&criteria=${"date"}`,
+        `/user/search-with-keyword?keyword=${searchKeyWord}`,
         { headers: { Authorization: getToken() } }
       )
       .then((response) => {
@@ -55,14 +49,15 @@ function DataAnalysisPage() {
           setSnackbarMessage(errorMessage);
           setSnackbarServity("info");
           setSnackbarState(true);
-          setEntries([]);
+          setExpenses([]);
           setLoading(false);
 
           return;
         }
-        setEntries(response.data.expenses);
+       
+        setExpenses(response.data.expenses);
         const calculatedTotalAmount = response.data.expenses.reduce(
-          (total, entry) => total + entry.totalAmount,
+          (total, entry) => total + entry.amount,
           0
         );
         setTotalAmount(calculatedTotalAmount);
@@ -76,6 +71,30 @@ function DataAnalysisPage() {
       });
   };
 
+  const closeViewMoreComponents = () => {
+    setViewMoreComponentStatus(false);
+  }
+
+  const viewMoreActnFunction = (id)=>{
+  
+    const entry = expenses.find(exp=> exp._id == id);
+    let objData = {
+        title:entry.title,
+        category:entry.category.name,
+        label:entry.label.name,
+        date:convertToUserLocalTime(entry.date,user.timezone),
+        amount:entry.amount,
+        remarks:entry.remarks
+    };
+    
+    setExpenseToViewMore(objData);
+    setViewMoreComponentStatus(true)
+
+
+
+
+  }
+
   return (
     <>
       <Loader openState={loading} />
@@ -85,16 +104,17 @@ function DataAnalysisPage() {
         severity={snackbarServity}
         onCloseFunction={changeSnackbarState}
       />
+      <ViewExpenseInDetailComponent openState={viewMoreComponentStatus} changeOpenState={closeViewMoreComponents} expense={expenseToViewMore} />
 
       <Grid container>
         <Grid item xs={12} padding={1}>
-          <BasicDatePicker label={"from"} onChangeFn={setstartDate} />
+          <TextField onChangeFn={setSearchKeyWord} label="keyword" />
         </Grid>
+
         <Grid item xs={12} padding={1}>
-          <BasicDatePicker label={"to"} onChangeFn={setendDate} />
-        </Grid>
-        <Grid item xs={12} padding={1}>
-          <SimpleButton buttonName="Search" onClickActn={getData} />
+          {searchKeyWord!=null && searchKeyWord.length > 3 ? (
+            <SimpleButton buttonName="Search" onClickActn={getData} />
+          ) : null}
         </Grid>
         <Grid
           item
@@ -103,7 +123,7 @@ function DataAnalysisPage() {
           justifyContent={"center"}
           display={"flex"}
         >
-          {entries.length > 0 ? (
+          {expenses.length > 0 ? (
             <span>
               {" "}
               <span>Total:&nbsp;</span>
@@ -119,14 +139,19 @@ function DataAnalysisPage() {
           justifyContent="center"
           sx={{ overflowY: "auto", maxHeight: "calc(100vh - 200px)" }}
         >
-          {entries.length > 0 ? (
+          {expenses.length > 0 ? (
             <>
-              {entries.map((entry) => {
+              {expenses.map((entry) => {
                 return (
-                  <AnalysisEntryDisplayCard
-                    typeOfAnalysis={"date"}
-                    date={entry.day}
-                    amount={entry.totalAmount}
+                  <EntryDisplayCard
+                    entryId={entry['_id']}
+                    category={entry.category.name}
+                    title={entry.title}
+                    date={convertToUserLocalTime(entry.date,user.timezone)}
+                    amount={entry.amount}
+                    viewMoreOption
+                    viewMoreClick={viewMoreActnFunction}
+
                   />
                 );
               })}
@@ -138,4 +163,4 @@ function DataAnalysisPage() {
   );
 }
 
-export default DataAnalysisPage;
+export default KeywordAnalysePage;

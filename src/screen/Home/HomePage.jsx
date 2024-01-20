@@ -14,7 +14,7 @@ import AddExpenseFormComponent from '../../components/Dialog/AddExpenseFormCompo
 
 //helpers
 import axios from '../../axios';
-import { getToken, convertToUserLocalTime } from '../../utils/commonFns';
+import { getToken, convertToUserLocalTime, displyExpenseComparison } from '../../utils/commonFns';
 import Loader from '../../components/Loader/Loader';
 import Snackbar from '../../components/Snackbar/Snackbar';
 
@@ -37,6 +37,7 @@ function HomePage() {
   const [expenseArry, setExpenseArry] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
   const [thisMonthTotal,setThisMonthTotal] = useState(0);
+  const [previousDayTotal,setPreviousDayTotal] = useState(0);
 
   const [formState, setFormState] = useState(false);
 
@@ -55,10 +56,11 @@ function HomePage() {
         setLoading(false);
         return;
       }
-      
+     
       setExpenseArry(response.data.expenses);
       setTotalAmount(response.data.totalAmount);
       setThisMonthTotal(response.data.thisMonthExpense);
+      setPreviousDayTotal(response.data.previousDayTotalAmount);
       setLoading(false);
 
     }).catch((error) => {
@@ -175,9 +177,12 @@ function HomePage() {
         <Grid item xs={12} sm={12} margin={"3px"}>
           <ExpenseDisplayComponent totalAmount={totalAmount} thisMonthTotal={thisMonthTotal} monthTotaal />
         </Grid>
-        <Grid item xs={12} sm={12} sx={{ background: '', marginTop: '2px !important', display: 'flex', justifyContent: 'space-evenly' }}>
+        {/* <Grid item xs={12} sm={12} sx={{ background: '', marginTop: '2px !important', display: 'flex', justifyContent: 'space-evenly' }}>
           <CurrencyRupeeIcon />
           <EqualizerIcon />
+        </Grid> */}
+        <Grid item xs={12} sm={12} display={"flex"} justifyContent={"flex-end"} pr={2}>
+      {displyExpenseComparison(totalAmount,previousDayTotal)}
         </Grid>
         <Grid item xs={12} sm={12} sx={{ background: '', marginTop: '2px !important' }}>
           <div style={scrollableGrid}>

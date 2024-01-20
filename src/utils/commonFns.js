@@ -48,3 +48,20 @@ export const  getUserTimeZone = ()=>{
     }
   }
   
+
+  export const displyExpenseComparison = (today, yesterday) => {
+    try {
+      const difference = today - yesterday;
+  
+      if (difference > 0) {
+        return <span>Your expense is {difference} rs higher than yesterday.</span>
+      } else if (difference < 0) {
+        return <span>Your expense is {Math.abs(difference)} rs lower than yesterday.</span>
+      } else {
+        return <span>Your expense is the same as yesterday.</span>
+      }
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
